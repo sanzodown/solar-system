@@ -70,7 +70,7 @@ export default function Scene({ celestialBodies }: { celestialBodies: CelestialB
                     🏠 Reset View
                 </button>
                 <a
-                    href="https://github.com/pewpewlazerz"
+                    href="https://github.com/sanzodown/solar-system"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 flex items-center gap-2 text-white hover:text-gray-300 transition-colors text-sm"
