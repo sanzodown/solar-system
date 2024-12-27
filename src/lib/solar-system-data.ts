@@ -14,14 +14,12 @@ export interface CelestialBody {
     mass?: string;
     density?: number;
     axialTilt?: number;
-    // Additional orbital parameters
     perihelion?: number;     // in km
     aphelion?: number;       // in km
     eccentricity?: number;   // ratio (no units)
     inclination?: number;    // degrees
 }
 
-// Real orbital inclinations (degrees relative to ecliptic)
 const ORBITAL_INCLINATIONS = {
     Mercury: 7.0,
     Venus: 3.4,
@@ -33,7 +31,6 @@ const ORBITAL_INCLINATIONS = {
     Neptune: 1.8
 };
 
-// Real data for the Sun
 const SUN_DATA = {
     diameter: 1392700, // km
     mass: "1.989e30", // kg
@@ -41,7 +38,6 @@ const SUN_DATA = {
     density: 1.408, // g/cm³
 };
 
-// Default colors for visualization
 const PLANET_COLORS = {
     Sun: "#FDB813",
     Mercury: "#A0522D",
@@ -63,7 +59,6 @@ export const ORBIT_SEGMENTS = 128;
 export function convertApiDataToCelestialBody(apiBody: SolarSystemBody): CelestialBody {
     const name = apiBody.englishName;
 
-    // Special case for the Sun
     if (name === "Sun") {
         return {
             name,
@@ -78,10 +73,9 @@ export function convertApiDataToCelestialBody(apiBody: SolarSystemBody): Celesti
         };
     }
 
-    // API values are already in kilometers
     const perihelion = apiBody.perihelion;
     const aphelion = apiBody.aphelion;
-    const semiMajorAxis = apiBody.semimajorAxis;  // Use the provided semi-major axis
+    const semiMajorAxis = apiBody.semimajorAxis;
     const diameter = apiBody.meanRadius * 2;       // Convert radius to diameter
 
     return {
@@ -103,13 +97,11 @@ export function convertApiDataToCelestialBody(apiBody: SolarSystemBody): Celesti
     };
 }
 
-// Scale for visualization (input in km, output in scene units)
 export const getSizeMultiplier = (body: CelestialBody) => {
     // All bodies use the same scale to maintain true proportions
     return body.diameter * GLOBAL_SCALE * SIZE_SCALE;
 };
 
-// Calculate elliptical orbit position (input in km, output in scene units)
 export const getEllipticalPosition = (body: CelestialBody, meanAnomaly: number) => {
     if (body.name === "Sun") return { x: 0, y: 0, z: 0 };
 
@@ -155,13 +147,12 @@ export const getCurrentOrbitalPosition = (body: CelestialBody) => {
     const daysSinceJ2000 = (now.getTime() - J2000.getTime()) / (1000 * 60 * 60 * 24);
 
     // Calculate mean anomaly
-    const meanMotion = 360 / body.orbitalPeriod; // degrees per day
+    const meanMotion = 360 / body.orbitalPeriod;
     const meanAnomaly = (meanMotion * daysSinceJ2000) % 360;
 
     return getEllipticalPosition(body, meanAnomaly);
 };
 
-// Get orbit points for visualization
 export const getOrbitPoints = (body: CelestialBody) => {
     const points = [];
     for (let i = 0; i <= ORBIT_SEGMENTS; i++) {
@@ -172,7 +163,6 @@ export const getOrbitPoints = (body: CelestialBody) => {
     return points;
 };
 
-// Update highlight properties for better visibility
 export const getPlanetHighlight = (body: CelestialBody): { emissive: string, emissiveIntensity: number } => {
     switch (body.name) {
         case "Sun":
