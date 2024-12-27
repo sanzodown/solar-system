@@ -1,69 +1,56 @@
-# Solar System Explorer
+# Pewpewlazer's Solar System at Scale
 
-An interactive 3D visualization of our solar system built with Next.js, Three.js, and React Three Fiber. This project aims to help users understand the scale and vastness of space through a simple yet engaging interface.
+A true-to-scale 3D visualization of our solar system built with Next.js, Three.js, and React Three Fiber.
+
+## About
+
+This project aims to provide an accurate representation of our solar system, maintaining true proportions for:
+- Planet sizes
+- Distances from the Sun
+- Orbital paths
+- Orbital periods
+
+All measurements are based on real astronomical data from the Solar System OpenData API.
 
 ## Features
 
-- Real-scale representation of planets and distances (scaled for visualization)
-- Interactive 3D controls for exploration
-- Orbital motion simulation
-- Responsive design
-- Simple and intuitive interface
-
-## Technologies Used
-
-- Next.js 14
-- TypeScript
-- Three.js
-- React Three Fiber
-- React Three Drei
-- Tailwind CSS
-
-## Getting Started
-
-1. Clone the repository:
-```bash
-git clone [repository-url]
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Run the development server:
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🌍 Accurate planet sizes and distances
+- 🛸 Interactive 3D navigation
+- 🎯 Click-to-focus on planets
+- 🌠 Dynamic star field background
+- 📏 True scale visualization
 
 ## Controls
 
-- Left click + drag: Rotate the view
-- Right click + drag: Pan the view
-- Scroll: Zoom in/out
-- Touch controls supported on mobile devices
+- Left click + drag to rotate
+- Right click + drag to pan
+- Scroll to zoom in/out
+- Click on planet names to focus
+- Use the Reset View button to return to the overview
 
-## Project Structure
+## Tech Stack
 
-- `src/components/solar-system/` - Solar system related components
-- `src/lib/solar-system-data.ts` - Planet data and scale factors
-- `src/app/` - Next.js app router pages
+- Next.js 14 (App Router)
+- Three.js / React Three Fiber
+- TypeScript
+- Tailwind CSS
+- Solar System OpenData API
 
-## Data Sources
+## Development
 
-The planetary data used in this simulation is based on real astronomical measurements, including:
-- Planet diameters
-- Distances from the Sun
-- Orbital periods
+```bash
+# Install dependencies
+pnpm install
 
-Note: The visualization uses scale factors to make the solar system explorable while maintaining relative proportions.
+# Run development server
+pnpm dev
 
-## Contributing
+# Build for production
+pnpm build
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Visit [http://localhost:3000](http://localhost:3000) to see the visualization.
 
-## License
+## Credits
 
-MIT License
+- Solar system data provided by [The Solar System OpenData](https://api.le-systeme-solaire.net/)
