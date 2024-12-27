@@ -10,6 +10,10 @@ export interface SolarSystemBody {
     axialTilt: number;
     avgTemp: number;
     mainAnomaly: number;
+    perihelion: number;
+    aphelion: number;
+    semimajorAxis: number;
+    eccentricity: number;
     vol: {
         volValue: number;
         volExponent: number;
