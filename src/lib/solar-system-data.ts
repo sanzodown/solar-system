@@ -83,6 +83,14 @@ export const celestialBodies: CelestialBody[] = [
 ];
 
 // Scale factors for visualization
-export const DISTANCE_SCALE = 0.0001; // Increased for better visibility
-export const SIZE_SCALE = 0.0003; // Increased for better visibility
+export const DISTANCE_SCALE = 0.5; // Increased distance between planets
+export const SIZE_SCALE = 0.00005; // Reduced overall size to make Sun smaller
 export const ORBIT_SEGMENTS = 128; // Number of segments in orbital paths
+
+// Custom size multipliers for better visualization
+export const getSizeMultiplier = (body: CelestialBody) => {
+    if (body.name === "Sun") return 0.15; // Make Sun smaller
+    if (body.name === "Jupiter" || body.name === "Saturn") return 2; // Make gas giants more visible
+    if (body.name === "Mercury" || body.name === "Mars") return 3; // Make small planets more visible
+    return 2; // Default multiplier for other planets
+};

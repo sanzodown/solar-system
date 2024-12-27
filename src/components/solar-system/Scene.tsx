@@ -13,21 +13,21 @@ export function Scene() {
                 <Suspense fallback={null}>
                     <PerspectiveCamera
                         makeDefault
-                        position={[0, 200, 400]}
-                        fov={60}
+                        position={[100, 50, 100]}
+                        fov={50}
                         near={0.1}
                         far={10000}
                     />
 
                     {/* Lighting */}
-                    <ambientLight intensity={0.1} />
-                    <pointLight position={[0, 0, 0]} intensity={2} distance={1000} decay={2} />
+                    <ambientLight intensity={0.3} />
+                    <pointLight position={[0, 0, 0]} intensity={1.5} distance={1000} decay={1.5} />
 
                     {/* Background stars */}
                     <Stars
                         radius={1000}
-                        depth={100}
-                        count={5000}
+                        depth={500}
+                        count={10000}
                         factor={4}
                         fade
                         speed={1}
@@ -43,8 +43,8 @@ export function Scene() {
                         enablePan={true}
                         enableZoom={true}
                         enableRotate={true}
-                        minDistance={20}
-                        maxDistance={2000}
+                        minDistance={10}
+                        maxDistance={1000}
                         dampingFactor={0.05}
                         rotateSpeed={0.5}
                         zoomSpeed={1}

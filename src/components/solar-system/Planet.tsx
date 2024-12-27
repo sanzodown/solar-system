@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { Mesh, Vector3 } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
-import { CelestialBody, DISTANCE_SCALE, SIZE_SCALE, ORBIT_SEGMENTS } from '@/lib/solar-system-data';
+import { CelestialBody, DISTANCE_SCALE, SIZE_SCALE, ORBIT_SEGMENTS, getSizeMultiplier } from '@/lib/solar-system-data';
 
 interface PlanetProps {
     body: CelestialBody;
@@ -13,14 +13,14 @@ interface PlanetProps {
 export default function Planet({ body }: PlanetProps) {
     const meshRef = useRef<Mesh>(null);
     const [hovered, setHovered] = useState(false);
-    const radius = body.diameter * SIZE_SCALE / 2;
+    const radius = (body.diameter * SIZE_SCALE * getSizeMultiplier(body)) / 2;
     const orbitRadius = body.distanceFromSun * DISTANCE_SCALE;
-    const position = body.name === 'Sun' ? [0, 0, 0] : [orbitRadius, 0, 0];
+    const initialPosition: [number, number, number] = body.name === 'Sun' ? [0, 0, 0] : [orbitRadius, 0, 0];
 
     useFrame((state, delta) => {
         if (meshRef.current && body.orbitalPeriod > 0) {
-            // Calculate orbital speed based on orbital period
-            const speed = (2 * Math.PI) / (body.orbitalPeriod * 60);
+            // Calculate orbital speed based on orbital period (slowed down for visualization)
+            const speed = (2 * Math.PI) / (body.orbitalPeriod * 100); // Slowed down orbital speed
             const angle = state.clock.getElapsedTime() * speed;
 
             // Update position based on orbital motion
@@ -56,14 +56,14 @@ export default function Planet({ body }: PlanetProps) {
                             itemSize={3}
                         />
                     </bufferGeometry>
-                    <lineBasicMaterial color={body.color} opacity={0.3} transparent />
+                    <lineBasicMaterial color={body.color} opacity={0.5} transparent linewidth={2} />
                 </line>
             )}
 
             {/* Planet */}
             <mesh
                 ref={meshRef}
-                position={position}
+                position={initialPosition}
                 onPointerOver={() => setHovered(true)}
                 onPointerOut={() => setHovered(false)}
             >
@@ -71,16 +71,20 @@ export default function Planet({ body }: PlanetProps) {
                 <meshStandardMaterial
                     color={body.color}
                     emissive={body.name === 'Sun' ? body.color : undefined}
-                    emissiveIntensity={body.name === 'Sun' ? 0.5 : 0}
+                    emissiveIntensity={body.name === 'Sun' ? 0.6 : 0}
+                    metalness={0.4}
+                    roughness={0.7}
                 />
 
                 {/* Label */}
                 {hovered && (
                     <Html>
                         <div className="px-2 py-1 bg-black/75 text-white rounded text-sm whitespace-nowrap">
-                            {body.name}
+                            <div className="font-bold">{body.name}</div>
                             <div className="text-xs opacity-75">
                                 Distance: {body.distanceFromSun.toLocaleString()} million km
+                                <br />
+                                Diameter: {body.diameter.toLocaleString()} km
                             </div>
                         </div>
                     </Html>
