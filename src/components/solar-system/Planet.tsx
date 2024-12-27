@@ -132,7 +132,7 @@ export default function Planet({ body, onFocus }: PlanetProps) {
                     >
                         <div className="px-2 py-1 bg-black/80 text-white rounded text-sm whitespace-nowrap">
                             <div className="text-xs space-y-1">
-                                <div>Distance: {body.distanceFromSun.toLocaleString()} AU</div>
+                                <div>Distance: {body.distanceFromSun.toLocaleString()} km</div>
                                 <div>Diameter: {body.diameter.toLocaleString()} km</div>
                                 <div>Orbital Period: {body.orbitalPeriod.toLocaleString()} days</div>
                                 {body.inclination !== undefined &&
