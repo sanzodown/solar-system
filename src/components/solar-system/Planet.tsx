@@ -15,7 +15,7 @@ import {
 
 interface PlanetProps {
     body: CelestialBody;
-    onFocus: (position: [number, number, number]) => void;
+    onFocus: (position: [number, number, number], bodyName: string) => void;
 }
 
 export default function Planet({ body, onFocus }: PlanetProps) {
@@ -39,7 +39,7 @@ export default function Planet({ body, onFocus }: PlanetProps) {
 
     const handleClick = (e: any) => {
         e.stopPropagation();
-        onFocus(initialPosition);
+        onFocus(initialPosition, body.name);
     };
 
     return (

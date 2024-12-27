@@ -24,22 +24,31 @@ export default function Scene({ celestialBodies }: { celestialBodies: CelestialB
         }
     };
 
-    const handlePlanetFocus = (position: [number, number, number]) => {
+    const handlePlanetFocus = (position: [number, number, number], bodyName: string) => {
         if (controlsRef.current) {
             const controls = controlsRef.current;
             controls.target.set(...position);
 
-            const distanceFromSun = Math.sqrt(position[0] ** 2 + position[1] ** 2 + position[2] ** 2);
-            const offset = new Vector3(
-                distanceFromSun * 0.01,
-                distanceFromSun * 0.005,
-                distanceFromSun * 0.01
-            );
-            const newPosition = new Vector3(...position).add(offset);
-            controls.object.position.copy(newPosition);
+            if (bodyName === "Sun") {
+                // For the Sun, position camera at a fixed distance
+                controls.object.position.set(1000, 500, 1000);
+                controls.minDistance = 100;
+                controls.maxDistance = 10000;
+            } else {
+                // For planets, calculate distance based on their position
+                const distanceFromSun = Math.sqrt(position[0] ** 2 + position[1] ** 2 + position[2] ** 2);
+                const offset = new Vector3(
+                    distanceFromSun * 0.01,
+                    distanceFromSun * 0.005,
+                    distanceFromSun * 0.01
+                );
+                const newPosition = new Vector3(...position).add(offset);
+                controls.object.position.copy(newPosition);
 
-            controls.minDistance = distanceFromSun * 0.001;
-            controls.maxDistance = distanceFromSun * 0.1;
+                controls.minDistance = distanceFromSun * 0.001;
+                controls.maxDistance = distanceFromSun * 0.1;
+            }
+
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.update();
